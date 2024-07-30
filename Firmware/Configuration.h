@@ -20,7 +20,7 @@ extern const char _sPrinterMmuName[] PROGMEM;
 #ifndef CMAKE_CONTROL
 #define FW_MAJOR 3
 #define FW_MINOR 140
-#define FW_REVISION 8
+#define FW_REVISION 9
 #define FW_COMMITNR 8066
 //#define FW_FLAVOR BETA      //uncomment if DEV, ALPHA, BETA or RC
 //#define FW_FLAVERSION 1     //uncomment if FW_FLAVOR is defined and versioning is needed. Limited to max 8.

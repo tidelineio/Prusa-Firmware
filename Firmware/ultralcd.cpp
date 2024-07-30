@@ -5154,10 +5154,10 @@ static void lcd_printer_ready_state_toggle()
 {
     if (GetPrinterState() == PrinterState::IsReady) {
         SERIAL_ECHOLNRPGM(MSG_HOST_ACTION_NOT_READY);
-        lcd_return_to_status(); //T3D: Send user back to status screen after requesting a job rather than lingering in the menu
     }
     else {
         SERIAL_ECHOLNRPGM(MSG_HOST_ACTION_READY);
+        lcd_return_to_status(); //T3D: Send user back to status screen after requesting a job rather than lingering in the menu
     }
 }
 
