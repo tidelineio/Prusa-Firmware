@@ -515,26 +515,26 @@ void lcdui_print_status_line(void) {
         if (heating_status_counter > 13) {
             heating_status_counter = 0;
         }
-        lcd_set_cursor(7, 3);
-        lcd_space(13);
+       // lcd_set_cursor(7, 3); //T3D: Disabling the Bed Heating .... message so we can show Job # info instead.  Bed status is shown by Actual/Target temp already.
+        //lcd_space(13);
 
         for (uint8_t dots = 0; dots < heating_status_counter; dots++) {
-            lcd_putc_at(7 + dots, 3, '.');
+            //lcd_putc_at(7 + dots, 3, '.');
         }
         switch (heating_status) {
         case HeatingStatus::EXTRUDER_HEATING:
-            lcd_puts_at_P(0, 3, _T(MSG_HEATING));
+            //lcd_puts_at_P(0, 3, _T(MSG_HEATING));
             break;
         case HeatingStatus::EXTRUDER_HEATING_COMPLETE:
-            lcd_puts_at_P(0, 3, _T(MSG_HEATING_COMPLETE));
+            //lcd_puts_at_P(0, 3, _T(MSG_HEATING_COMPLETE));
             heating_status = HeatingStatus::NO_HEATING;
             heating_status_counter = 0;
             break;
         case HeatingStatus::BED_HEATING:
-            lcd_puts_at_P(0, 3, _T(MSG_BED_HEATING));
+            //lcd_puts_at_P(0, 3, _T(MSG_BED_HEATING));
             break;
         case HeatingStatus::BED_HEATING_COMPLETE:
-            lcd_puts_at_P(0, 3, _T(MSG_BED_DONE));
+           // lcd_puts_at_P(0, 3, _T(MSG_BED_DONE));
             heating_status = HeatingStatus::NO_HEATING;
             heating_status_counter = 0;
             break;
@@ -5237,14 +5237,14 @@ static void lcd_main_menu()
     MENU_ITEM_FUNCTION_P(PSTR("power panic"), uvlo_);
 #endif //TMC2130_DEBUG
 
-    // Menu item for reprint
-    if (!printer_active() && !printer_recovering() && (heating_status == HeatingStatus::NO_HEATING)) {
-        if ((GetPrinterState() == PrinterState::SDPrintingFinished) && card.mounted) {
-            MENU_ITEM_FUNCTION_P(_T(MSG_REPRINT), lcd_reprint_from_eeprom);
-        } else if ((GetPrinterState() == PrinterState::HostPrintingFinished) && M79_timer_get_status()) {
-            MENU_ITEM_FUNCTION_P(_T(MSG_REPRINT), lcd_send_action_start);
-        }
-    }
+    // // Menu item for reprint  T3D: Removing this because it messes with the muscle memory of preheat being 2nd notch
+    // if (!printer_active() && !printer_recovering() && (heating_status == HeatingStatus::NO_HEATING)) {
+    //     if ((GetPrinterState() == PrinterState::SDPrintingFinished) && card.mounted) {
+    //         MENU_ITEM_FUNCTION_P(_T(MSG_REPRINT), lcd_reprint_from_eeprom);
+    //     } else if ((GetPrinterState() == PrinterState::HostPrintingFinished) && M79_timer_get_status()) {
+    //         MENU_ITEM_FUNCTION_P(_T(MSG_REPRINT), lcd_send_action_start);
+    //     }
+    // }
 
     // Menu is never shown when idle
     if (babystep_allowed_strict() && (printJobOngoing() || lcd_commands_type == LcdCommands::Layer1Cal))
@@ -5263,6 +5263,7 @@ static void lcd_main_menu()
                     MENU_ITEM_FUNCTION_P(_T(MSG_SET_NOT_READY), lcd_printer_ready_state_toggle);
                 } else {
                     MENU_ITEM_FUNCTION_P(_T(MSG_SET_READY), lcd_printer_ready_state_toggle);
+                    lcd_return_to_status(); //T3D: Send user back to status screen after requesting a job rather than lingering in the menu
                 }
             }
         }
