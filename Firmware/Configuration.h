@@ -16,11 +16,11 @@ extern const char _sPrinterMmuName[] PROGMEM;
 
 // Firmware version.
 // NOTE: These are ONLY used if you are not building via cmake and/or not in a git repository.
-// Otherwise the repository information takes precedence.
+// Otherwise the repository information takes precedence.  //T3D: Changing 14.0 to 140.0 where the revision is now T3D specific -- This is lame, but it works
 #ifndef CMAKE_CONTROL
 #define FW_MAJOR 3
-#define FW_MINOR 14
-#define FW_REVISION 0
+#define FW_MINOR 140
+#define FW_REVISION 5
 #define FW_COMMITNR 8066
 //#define FW_FLAVOR BETA      //uncomment if DEV, ALPHA, BETA or RC
 //#define FW_FLAVERSION 1     //uncomment if FW_FLAVOR is defined and versioning is needed. Limited to max 8.
